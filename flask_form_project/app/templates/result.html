@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Result</title>
+</head>
+<body>
+    <h1>Submission Successful</h1>
+    <p>Thank you, <strong>{{ name }}</strong>!</p>
+    <p>We have sent a confirmation to <strong>{{ email }}</strong>.</p>
+    <p>Your favorite color is: <span style="color: {{ color }}">{{ color }}</span>.</p>
+    <p>Your profession is: {{ profession }}.</p>
+    <p>Your hobbies: {{ hobbies | join(', ') }}.</p>
+    <p>Your level: {{ level }}.</p>
+    <a href="/">Go back to form</a>
+</body>
+</html>
