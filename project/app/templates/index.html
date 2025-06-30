@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Welcome to My Flask App!</h2>
+        <p>Explore the website to lean more about us!</p>
+        <div>
+            <img src="{{ url_for('static', filename='img/Logo.png') }}" width="200" alt="Тут логотип Flask" />
+        </div>
+    </div>
+{% endblock %}
