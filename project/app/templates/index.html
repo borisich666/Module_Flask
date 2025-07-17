@@ -9,5 +9,6 @@
         <div>
             <img src="{{ url_for('static', filename='img/Logo.png') }}" width="200" alt="Тут логотип Flask" />
         </div>
+       <p class="datetime-display">Сегодня: {{current_datetime.strftime('%A, %B %d, %Y, %H:%M') }}</p>
     </div>
 {% endblock %}

@@ -1,13 +1,17 @@
 from flask import Flask
 
+
 # Создаем объект приложения Flask
 app = Flask(__name__)
 
 
-# Определяем маршрут и привязываем его к функции
-@app.route('/')
-def hello():
-    return "Hello, Flask!"
+
+
+# Задание 1 Lesson 9(Flask)
+# Создаем фильтр для форматирования даты
+@app.template_filter('russian_date')
+def format_russian_date(dt):
+    return dt.strftime('%A, %B %d, %Y, %H:%M:%S')
 
 
 # Запуск приложения

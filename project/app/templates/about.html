@@ -12,4 +12,17 @@
             <li>Values: Collaboration, innovation, and leaming.</li>
         </ul>
     </div>
+<!-- Задание 2 -->
+    <div class="team-container">
+        <h1>Наша команда</h1>
+        <ul class="team-list">
+            {% for member in team_members %}
+            <li class="team-member">
+                <div class="member-name">{{ member.name }}</div>
+                <div class="member-role">{{ member.role }}</div>
+            </li>
+        {% endfor %}
+         </ul>
+    </div>
+000
 {% endblock %}

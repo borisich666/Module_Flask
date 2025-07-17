@@ -1,15 +1,30 @@
 from flask import render_template, request
 from app import app
+from datetime import datetime
+
+
+# Задание 2 Lesson 9(Flask)
+# Список участников команды
+team_members = [
+    {'name': 'Анна', 'role': 'Главный разработчик'},
+    {'name': 'Иван', 'role': 'UX/UI дизайнер'},
+    {'name': 'Мария', 'role': 'Менеджер проектов'},
+    {'name': 'Дмитрий', 'role': 'Тестировщик'},
+    {'name': 'Ольга', 'role': 'Бизнес-аналитик'}
+]
 
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    current_datetime = datetime.now()
+    return render_template("index.html", current_datetime=current_datetime)
 
 
-@app.route("/about")
+@app.route('/about')
 def about():
-    return render_template("about.html")
+
+    # Передаем в шаблон
+    return render_template('about.html', team_members=team_members)
 
 
 @app.route("/contact", methods=['GET', 'POST'])
