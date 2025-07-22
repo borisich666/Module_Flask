@@ -13,6 +13,18 @@ team_members = [
     {'name': 'Ольга', 'role': 'Бизнес-аналитик'}
 ]
 
+# Задание 3
+# Словарь с контактными данными
+support_data = {
+    "manager_phone": "+7 (999) 123-45-67",
+    "manager_name": "Иванова Мария Петровна",
+    "office_addr": {
+        "street": "ул. Примерная, д. 42",
+        "city": "Москва",
+        "postal_code": "123456"
+    }
+}
+
 
 @app.route("/")
 def home():
@@ -43,4 +55,4 @@ def contact():
                                message=message,
                                success_message="Thank you! Your message has been sent successfully!")
 
-    return render_template('contact.html')
+    return render_template('contact.html', support=support_data)

@@ -29,6 +29,16 @@
             <div class="container">
                 <button type="submit" class="funny-button"> Send </button>
             </div>
-        </form>
+        </form>0
 {% endif %}
+<div class="contact-info">
+        <h1>Контакты поддержки</h1>
+
+        <p><strong>Менеджер:</strong> {{ support.manager_name }}</p>
+        <p><strong>Телефон:</strong> {{ support.manager_phone }}</p>
+
+        <h2>Адрес офиса:</h2>
+        <p>{{ support.office_addr.street }}</p>
+        <p>{{ support.office_addr.city }}, {{ support.office_addr.postal_code }}</p>
+    </div>
 {% endblock %}
