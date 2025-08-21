@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="card">
+        <h2>Добавление нового агента</h2>
+        
+        <form method="POST">
+            <div style="margin-bottom: 15px;">
+                <label for="codename">Кодовое имя:</label>
+                <input type="text" id="codename" name="codename" value="{{ codename }}" 
+                       placeholder="Оставьте пустым для автоматической генерации" style="width: 100%; padding: 8px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="phone">Контактный номер:</label>
+                <input type="text" id="phone" name="phone" value="{{ phone }}" 
+                       placeholder="+7 XXX XXX-XX-XX" style="width: 100%; padding: 8px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="email">Email *:</label>
+                <input type="email" id="email" name="email" value="{{ email }}" 
+                       required placeholder="agent@example.com" style="width: 100%; padding: 8px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="access_level">Уровень доступа *:</label>
+                <select id="access_level" name="access_level" required style="width: 100%; padding: 8px;">
+                    <option value="">Выберите уровень доступа</option>
+                    <option value="Секретно" {% if access_level == 'Секретно' %}selected{% endif %}>Секретно</option>
+                    <option value="Совершенно секретно" {% if access_level == 'Совершенно секретно' %}selected{% endif %}>Совершенно секретно</option>
+                    <option value="Особой важности" {% if access_level == 'Особой важности' %}selected{% endif %}>Особой важности</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="notes">Примечания:</label>
+                <textarea id="notes" name="notes" rows="3" 
+                          placeholder="Дополнительная информация об агенте" 
+                          style="width: 100%; padding: 8px;">{{ notes }}</textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-success">Добавить агента</button>
+            <a href="{{ url_for('index') }}" class="btn">Отмена</a>
+        </form>
+    </div>
+{% endblock %}

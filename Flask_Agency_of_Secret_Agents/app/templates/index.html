@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Все агенты</h2>
+    
+    {% if agents %}
+        {% for agent in agents %}
+            <div class="card">
+                <h3>{{ agent[1] }} <small>(ID: {{ agent[0] }})</small></h3>
+                <p>Уровень доступа: {{ agent[4] }}</p>
+                <p>Email: {{ agent[3] }}</p>
+                <p>Телефон: {{ agent[2] }}</p>
+                <a href="{{ url_for('view_agent', agent_id=agent[0]) }}" class="btn">Просмотр</a>
+                <a href="{{ url_for('edit_agent', agent_id=agent[0]) }}" class="btn">Редактировать</a>
+                <form action="{{ url_for('delete_agent', agent_id=agent[0]) }}"
+                      method="POST" style="display: inline;">
+                <a href="{{ url_for('send_message', agent_id=agent[0]) }}"
+                   class="btn btn-success">Срочное сообщение</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>В базе нет агентов.</p>
+    {% endif %}
+    
+    <div class="card">
+        <h3>Секретные операции</h3>
+        <form action="{{ url_for('nuke_database') }}" method="POST">
+            <input type="password" name="secret_code" placeholder="Секретный код" required>
+            <button type="submit" class="btn btn-danger">Уничтожить все досье</button>
+        </form>
+    </div>
+{% endblock %}

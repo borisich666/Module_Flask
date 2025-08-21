@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="card">
+        <h2>Отправка срочного сообщения агенту {{ agent[0] }}</h2>
+        <p>Email агента: {{ agent[1] }}</p>
+        
+        <form method="POST">
+            <div style="margin-bottom: 15px;">
+                <label for="message">Текст сообщения:</label><br>
+                <textarea id="message" name="message" rows="5" style="width: 100%; padding: 8px;" required placeholder="Введите срочное сообщение..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-success">Отправить сообщение</button>
+            <a href="{{ url_for('view_agent', agent_id=agent_id) }}" class="btn">Отмена</a>
+        </form>
+    </div>
+{% endblock %}

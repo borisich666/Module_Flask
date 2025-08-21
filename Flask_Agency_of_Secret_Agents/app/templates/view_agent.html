@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="card">
+        <h2>Досье агента: {{ agent[1] }}</h2>
+        
+        <div style="margin-bottom: 15px;">
+            <strong>ID досье:</strong> {{ agent[0] }}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <strong>Кодовое имя:</strong> {{ agent[1] }}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <strong>Контактный номер:</strong> {{ agent[2] or 'Не указан' }}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <strong>Email:</strong> {{ agent[3] }}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <strong>Уровень доступа:</strong> {{ agent[4] }}
+        </div>
+        
+        {% if agent[5] %}
+        <div style="margin-bottom: 15px;">
+            <strong>Примечания:</strong> {{ agent[5] }}
+        </div>
+        {% endif %}
+        
+        <div>
+            <a href="{{ url_for('edit_agent', agent_id=agent_id) }}" class="btn">Редактировать</a>
+            <a href="{{ url_for('send_message', agent_id=agent_id) }}" class="btn btn-success">Срочное сообщение</a>
+            <form action="{{ url_for('delete_agent', agent_id=agent_id) }}" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить этого агента?')">Удалить</button>
+            </form>
+            <a href="{{ url_for('index') }}" class="btn">На главную</a>
+        </div>
+    </div>
+{% endblock %}

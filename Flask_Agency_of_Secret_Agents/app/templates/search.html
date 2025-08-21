@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="card">
+        <h2>Поиск агентов</h2>
+        
+        <form method="POST">
+            <div style="margin-bottom: 15px;">
+                <label for="search_term">Кодовое имя:</label>
+                <input type="text" id="search_term" name="search_term" 
+                       value="{{ search_term }}" placeholder="Введите кодовое имя" 
+                       style="width: 100%; padding: 8px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="access_level">Уровень доступа:</label>
+                <select id="access_level" name="access_level" style="width: 100%; padding: 8px;">
+                    <option value="">Все уровни</option>
+                    <option value="Секретно" {% if selected_access_level == 'Секретно' %}selected{% endif %}>Секретно</option>
+                    <option value="Совершенно секретно" {% if selected_access_level == 'Совершенно секретно' %}selected{% endif %}>Совершенно секретно</option>
+                    <option value="Особой важности" {% if selected_access_level == 'Особой важности' %}selected{% endif %}>Особой важности</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn">Найти агентов</button>
+        </form>
+    </div>
+
+    {% if request.method == 'POST' %}
+        <div class="card">
+            <h3>Результаты поиска</h3>
+            
+            {% if agents %}
+                <p>Найдено агентов: {{ agents|length }}</p>
+                
+                {% for agent in agents %}
+                    <div class="card" style="margin-bottom: 10px;">
+                        <h4>{{ agent[1] }} <small>(ID: {{ agent[0] }})</small></h4>
+                        <p>Уровень доступа: {{ agent[4] }}</p>
+                        <p>Email: {{ agent[3] }}</p>
+                        <p>Телефон: {{ agent[2] }}</p>
+                        {% if agent[5] %}<p>Примечания: {{ agent[5] }}</p>{% endif %}
+                        
+                        <!-- Исправленные ссылки с правильным agent_id -->
+                        <a href="{{ url_for('view_agent', agent_id=agent[0]) }}" class="btn">Просмотр</a>
+                        <a href="{{ url_for('edit_agent', agent_id=agent[0]) }}" class="btn">Редактировать</a>
+                        <a href="{{ url_for('send_message', agent_id=agent[0]) }}"
+                           class="btn btn-success">Срочное сообщение</a>
+
+                        <!-- Форма для удаления -->
+                        <form action="{{ url_for('delete_agent', agent_id=agent[0]) }}"
+                              method="POST" style="display: inline;">
+                            <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Вы уверены,
+                                     что хотите удалить этого агента?')">Удалить</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Агенты не найдены. Попробуйте изменить критерии поиска.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="card">
+        <h2>Редактирование агента: {{ agent[1] }}</h2>
+        
+        <form method="POST">
+            <div style="margin-bottom: 15px;">
+                <label for="codename">Кодовое имя *:</label>
+                <input type="text" id="codename" name="codename" value="{{ agent[1] }}" 
+                       required style="width: 100%; padding: 8px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="phone">Контактный номер:</label>
+                <input type="text" id="phone" name="phone" value="{{ agent[2] or '' }}" 
+                       placeholder="+7 XXX XXX-XX-XX" style="width: 100%; padding: 8px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="email">Email *:</label>
+                <input type="email" id="email" name="email" value="{{ agent[3] }}" 
+                       required placeholder="agent@example.com" style="width: 100%; padding: 8px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="access_level">Уровень доступа *:</label>
+                <select id="access_level" name="access_level" required style="width: 100%; padding: 8px;">
+                    <option value="">Выберите уровень доступа</option>
+                    <option value="Секретно" {% if agent[4] == 'Секретно' %}selected{% endif %}>Секретно</option>
+                    <option value="Совершенно секретно" {% if agent[4] == 'Совершенно секретно' %}selected{% endif %}>Совершенно секретно</option>
+                    <option value="Особой важности" {% if agent[4] == 'Особой важности' %}selected{% endif %}>Особой важности</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="notes">Примечания:</label>
+                <textarea id="notes" name="notes" rows="3" 
+                          placeholder="Дополнительная информация об агенте" 
+                          style="width: 100%; padding: 8px;">{{ agent[5] or '' }}</textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-success">Сохранить изменения</button>
+            <a href="{{ url_for('view_agent', agent_id=agent[0]) }}" class="btn">Отмена</a>
+        </form>
+    </div>
+{% endblock %}
