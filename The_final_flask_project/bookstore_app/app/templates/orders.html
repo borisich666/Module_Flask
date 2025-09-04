@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>📦 История заказов</h1>
+    
+    {% if orders %}
+    <div class="orders-list">
+        {% for order in orders %}
+        <div class="order-card">
+            <div class="order-header">
+                <span class="order-number">Заказ #{{ order.id }}</span>
+                <span class="order-date">{{ order.order_date.strftime('%d.%m.%Y %H:%M') }}</span>
+                <span class="order-status status-processing">{{ order.status }}</span>
+            </div>
+            
+            <p><strong>Способ доставки:</strong> 
+                {% if order.delivery_method == 'pickup' %}Самовывоз{% else %}Доставка до двери{% endif %}
+            </p>
+            
+            {% if order.delivery_address %}
+            <p><strong>Адрес:</strong> {{ order.delivery_address }}</p>
+            {% endif %}
+            
+            <p><strong>Сумма заказа:</strong> {{ order.total_amount }} ₽</p>
+            
+            <h4>Товары:</h4>
+            <ul>
+                {% for item in order.order_items %}
+                <li>{{ item.book.title }} - {{ item.quantity }} шт. × {{ item.price }} ₽</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 3rem;">
+        <h2>📭 Заказов пока нет</h2>
+        <p>Сделайте свой первый заказ!</p>
+        <a href="{{ url_for('main.catalog') }}" class="btn btn-primary">Перейти в каталог</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

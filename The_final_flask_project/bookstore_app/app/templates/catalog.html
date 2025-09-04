@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>📚 Каталог книг{% if current_genre %} - {{ current_genre }}{% endif %}</h1>
+    
+    {% if books.items %}
+    <div class="books-grid">
+        {% for book in books.items %}
+        <div class="book-card">
+            <img src="{{ book.cover_url }}" alt="{{ book.title }}">
+            <h3>{{ book.title }}</h3>
+            <p class="author">{{ book.author }}</p>
+            <p class="price">{{ book.price }} ₽</p>
+            <p class="rating">⭐ {{ book.rating }}/5</p>
+            <span class="genre">{{ book.genre }}</span>
+            <br>
+            <a href="{{ url_for('main.book_detail', book_id=book.id) }}" class="btn">Подробнее</a>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('main.add_to_cart', book_id=book.id) }}" class="btn btn-primary">В корзину</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Пагинация -->
+    <div style="text-align: center; margin-top: 2rem;">
+        {% if books.has_prev %}
+        <a href="{{ url_for('main.catalog', page=books.prev_num, genre=current_genre) }}" class="btn">← Назад</a>
+        {% endif %}
+        
+        <span style="margin: 0 1rem;">Страница {{ books.page }} из {{ books.pages }}</span>
+        
+        {% if books.has_next %}
+        <a href="{{ url_for('main.catalog', page=books.next_num, genre=current_genre) }}" class="btn">Вперед →</a>
+        {% endif %}
+    </div>
+    {% else %}
+    <p style="text-align: center; font-size: 1.2rem; color: #7f8c8d;">Книги не найдены</p>
+    {% endif %}
+</div>
+{% endblock %}

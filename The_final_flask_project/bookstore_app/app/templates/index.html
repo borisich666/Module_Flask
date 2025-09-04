@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Добро пожаловать в Книжный магазин!</h1>
+    
+    <section>
+        <h2>📊 ТОП-3 книги недели</h2>
+        <div class="books-grid">
+            {% for book in top_books %}
+            <div class="book-card">
+                <img src="{{ book.cover_url }}" alt="{{ book.title }}">
+                <h3>{{ book.title }}</h3>
+                <p class="author">{{ book.author }}</p>
+                <p class="price">{{ book.price }} ₽</p>
+                <p class="rating">⭐ {{ book.rating }}/5</p>
+                <span class="genre">{{ book.genre }}</span>
+                <br>
+                <a href="{{ url_for('main.book_detail', book_id=book.id) }}" class="btn">Подробнее</a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    
+    <section>
+        <h2>📚 Жанры</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0;">
+            {% for genre in genres %}
+            <a href="{{ url_for('main.catalog', genre=genre) }}" class="btn">
+                {{ genre }}
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

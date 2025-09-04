@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>💳 Оформление заказа</h1>
+    
+    <div class="cart-items" style="margin-bottom: 2rem;">
+        <h3>Товары в заказе:</h3>
+        {% for item in cart_items %}
+        <div class="cart-item">
+            <img src="{{ item.cover_url }}" alt="{{ item.title }}">
+            <div class="cart-item-info">
+                <h3 class="cart-item-title">{{ item.title }}</h3>
+                <p class="cart-item-author">{{ item.author }}</p>
+                <p class="cart-item-price">{{ item.price }} ₽ × {{ item.quantity }} = {{ item.price * item.quantity }} ₽</p>
+            </div>
+        </div>
+        {% endfor %}
+        
+        <div class="cart-total">
+            <h3>Итого: {{ cart_items|sum(attribute='price') * cart_items|sum(attribute='quantity') }} ₽</h3>
+        </div>
+    </div>
+    
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.delivery_method.label }}
+            {{ form.delivery_method(class="form-control") }}
+        </div>
+        
+        <div class="form-group" id="address-field" style="display: none;">
+            {{ form.address.label }}
+            {{ form.address(class="form-control", rows=3) }}
+        </div>
+        
+        {{ form.submit(class="btn btn-success") }}
+    </form>
+</div>
+
+<script>
+    // Простой скрипт для показа/скрытия поля адреса
+    document.addEventListener('DOMContentLoaded', function() {
+        const deliveryMethod = document.getElementById('{{ form.delivery_method.id }}');
+        const addressField = document.getElementById('address-field');
+        
+        function toggleAddressField() {
+            if (deliveryMethod.value === 'delivery') {
+                addressField.style.display = 'block';
+            } else {
+                addressField.style.display = 'none';
+            }
+        }
+        
+        deliveryMethod.addEventListener('change', toggleAddressField);
+        toggleAddressField(); // Initial check
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>🛒 Корзина</h1>
+    
+    {% if cart_items %}
+    <div class="cart-items">
+        {% for item in cart_items %}
+        <div class="cart-item">
+            <img src="{{ item.cover_url }}" alt="{{ item.title }}">
+            <div class="cart-item-info">
+                <h3 class="cart-item-title">{{ item.title }}</h3>
+                <p class="cart-item-author">{{ item.author }}</p>
+                <p class="cart-item-price">{{ item.price }} ₽ × {{ item.quantity }} = {{ item.price * item.quantity }} ₽</p>
+            </div>
+            <a href="{{ url_for('main.remove_from_cart', item_index=loop.index0) }}" class="btn btn-primary">
+                ❌ Удалить
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="cart-total">
+        <h3>Итого: {{ total }} ₽</h3>
+    </div>
+    
+    <div style="text-align: center; margin-top: 2rem;">
+        <a href="{{ url_for('main.checkout') }}" class="btn btn-success">💳 Оформить заказ</a>
+        <a href="{{ url_for('main.catalog') }}" class="btn">← Продолжить покупки</a>
+    </div>
+    
+    {% else %}
+    <div style="text-align: center; padding: 3rem;">
+        <h2>😔 Корзина пуста</h2>
+        <p>Добавьте книги в корзину, чтобы продолжить</p>
+        <a href="{{ url_for('main.catalog') }}" class="btn btn-primary">Перейти в каталог</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
